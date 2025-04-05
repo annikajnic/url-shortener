@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType, Default, CreatedAt } from "sequelize-typescript";
+import { Table, Column, Model, DataType, Default } from 'sequelize-typescript'
 
 @Table
 export class URL extends Model {
@@ -6,26 +6,25 @@ export class URL extends Model {
     type: DataType.STRING,
     allowNull: false,
   })
-  longUrl!: string;
+  longUrl!: string
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
     unique: true,
   })
-  shortUrl!: string;
+  shortUrl!: string
 
-  @CreatedAt
   @Column({ type: DataType.DATE })
-  createdAt!: Date;
+  createdAt!: Date
 
   @Column({
     type: DataType.DATE,
-    allowNull: true,  
+    allowNull: true,
   })
-  expiresAt!: Date;
+  expiresAt!: Date
 
   @Default(0)
-  @Column(DataType.INTEGER,)
-  accessCount!: number;
+  @Column(DataType.INTEGER)
+  accessCount!: number
 }

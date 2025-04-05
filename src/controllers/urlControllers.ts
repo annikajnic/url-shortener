@@ -7,8 +7,7 @@ export const shortenUrl: RequestHandler = async (
   req: Request,
   res: Response,
 ) => {
-  const { longUrl, expiresInDays } = JSON.parse(req.body.data)
-  console.log(req.body.data, longUrl, expiresInDays)
+  const { longUrl, expiresInDays = 7 } = JSON.parse(req.body.data)
 
   if (!longUrl || !validUrl.isUri(longUrl)) {
     res.status(400).json({ error: 'Invalid URL provided.' })

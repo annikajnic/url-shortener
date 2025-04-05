@@ -10,22 +10,30 @@ import path from 'path'
 
 const app = express()
 
-// // Serve static frontend files
-// app.use(express.static(path.join(__dirname, '../client/build')))
-
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../client/build', 'index.html'))
-// })
-
 app.use(
   cors({
     origin: 'http://localhost:3000', // React dev server
   }),
 )
-app.use(express.json())
-console.log(process.env.DB_USER)
 
 app.use('/api', urlRoutes)
+
+// Serve static frontend files
+app.use(express.static(path.join(__dirname, '../client/build')))
+app.use(express.json())
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build', 'index.html'))
+})
+
+sequelize
+  .sync({ alter: true })
+  .then(() => {
+    console.log('Database synced.')
+  })
+  .catch(err => {
+    console.error('Failed to sync DB:', err)
+  })
 
 const PORT = process.env.PORT || 2000
 app.listen(PORT, async () => {
