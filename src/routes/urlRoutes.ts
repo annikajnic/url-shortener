@@ -1,9 +1,20 @@
-import { Router, Request, Response, NextFunction } from "express";
-import { redirectUrl, shortenUrl } from "../controllers";
+import { Router, Request, Response, NextFunction } from 'express'
+import { listLinks, redirectUrl, shortenUrl } from '../controllers'
 
-const router = Router();
+const router = Router()
 
-router.post("/shorten",  (req: Request, res: Response, next: NextFunction) => shortenUrl(req, res, next));
-router.get("/:shortUrl", (req: Request, res: Response, next: NextFunction) => redirectUrl(req, res, next));
+router.get(
+  '/:shortUrl',
+  (req: Request, res: Response, next: NextFunction) => redirectUrl,
+)
+router.get(
+  '/links',
+  (req: Request, res: Response, next: NextFunction) => listLinks,
+)
 
-export default router;
+router.post(
+  '/shorten',
+  (req: Request, res: Response, next: NextFunction) => shortenUrl,
+)
+
+export default router

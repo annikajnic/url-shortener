@@ -1,13 +1,11 @@
 import { Request, RequestHandler, Response } from 'express'
-import validUrl from 'valid-url'
+import * as validUrl from 'valid-url'
 import { URL } from '../models/URL'
-import dayjs from 'dayjs'
+import * as dayjs from 'dayjs'
 
-export const shortenUrl: RequestHandler = async (
-  req: Request,
-  res: Response,
-) => {
-  const { longUrl, expiresInDays = 7 } = JSON.parse(req.body.data)
+export const shortenUrl = async (req: Request, res: Response) => {
+  console.log('🔍 [POST] /api/shorten endpoint hit')
+  const { longUrl, expiresInDays = 7 } = req.body.data
 
   if (!longUrl || !validUrl.isUri(longUrl)) {
     res.status(400).json({ error: 'Invalid URL provided.' })
@@ -62,3 +60,29 @@ export const redirectUrl: RequestHandler = async (
     res.status(500).json({ error: 'Database error' })
   }
 }
+
+export const listLinks: RequestHandler = async (
+  req: Request,
+  res: Response,
+) => {
+  console.log('🔍 [GET] /api/links endpoint hit')
+
+  try {
+    const links = await URL.findAll()
+    console.log('✅ DB query finished, found:', links.length)
+
+    res.status(200).json(links)
+  } catch (err) {
+    console.error('❌ Error during DB query:', err)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+}
+
+// export const listLinks = async (req: Request, res: Response) => {
+//   console.log('🔍 [GET] /api/links endpoint hit'
+
+//   )
+//   res
+//     .status(200)
+//     .json([{ id: 1, shortUrl: 'abc123', longUrl: 'https://test.com' }])
+// }
