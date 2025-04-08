@@ -11,7 +11,6 @@ router.get(
   '/links',
   (req: Request, res: Response, next: NextFunction) => listLinks,
 )
-
 router.post(
   '/shorten',
   (req: Request, res: Response, next: NextFunction) => shortenUrl,
