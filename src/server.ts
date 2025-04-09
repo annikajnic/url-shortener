@@ -9,6 +9,8 @@ import helmet from 'helmet'
 import { sequelize } from './config/db'
 import { listLinks, redirectUrl, shortenUrl } from './controllers'
 import { limiter } from './helpers/limiter'
+import router from './routes/urlRoutes'
+import { NextFunction } from 'express'
 
 const app = express()
 
